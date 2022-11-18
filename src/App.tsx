@@ -34,6 +34,21 @@ function App() {
           >
             Blanc
           </Radio>
+          <Radio
+            value="white"
+            onClick={toggleColor}
+            checked={color === "white" ? true : false}
+          >
+            Gold
+          </Radio>
+          <Radio
+            value="white"
+            onClick={toggleColor}
+            checked={color === "white" ? true : false}
+          >
+            Team
+          </Radio>
+
         </Radio.Group>
 
         <Text h2>Orientation</Text>
@@ -78,12 +93,15 @@ function App() {
       </div>
 
       {vertical ? (
-        <div className="preview" style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-evenly",
-          alignItems: "center"
-          }}>
+        <div
+          className="preview"
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-evenly",
+            alignItems: "center",
+          }}
+        >
           <Card
             shadow
             type={color === "black" ? "dark" : "default"}
@@ -124,23 +142,37 @@ function App() {
             }}
             className="card"
           >
-            <Card.Content style={vertical ? { display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "space-between" } : {}}className="backCard">
+            <Card.Content
+              style={
+                vertical
+                  ? {
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                  }
+                  : {}
+              }
+              className="backCard"
+            >
               <div>
                 <Text>{name}</Text>
                 <Text style={{ fontWeight: "bold" }}>{position}</Text>
                 <Text>+{tel}</Text>
               </div>
-             {color === "white" ? 
-
-              <img src={QRCode} alt="qr-code" />
-              : 
-              <img style={{
-                backgroundColor: "white",
-                borderRadius: "8px"
-              }} src={QRCode} alt="qr-code" />
-              }
-             </Card.Content>
-
+              {color === "white" ? (
+                <img src={QRCode} alt="qr-code" />
+              ) : (
+                <img
+                  style={{
+                    backgroundColor: "white",
+                    borderRadius: "8px",
+                  }}
+                  src={QRCode}
+                  alt="qr-code"
+                />
+              )}
+            </Card.Content>
           </Card>
         </div>
       ) : (
@@ -191,16 +223,18 @@ function App() {
                 <Text style={{ fontWeight: "bold" }}>{position}</Text>
                 <Text>+{tel}</Text>
               </div>
-{color === "white" ? 
-
-              <img src={QRCode} alt="qr-code" />
-              : 
-              <img style={{
-                backgroundColor: "white",
-                borderRadius: "8px"
-              }} src={QRCode} alt="qr-code" />
-              }
-
+              {color === "white" ? (
+                <img src={QRCode} alt="qr-code" />
+              ) : (
+                <img
+                  style={{
+                    backgroundColor: "white",
+                    borderRadius: "8px",
+                  }}
+                  src={QRCode}
+                  alt="qr-code"
+                />
+              )}
             </Card.Content>
           </Card>
         </div>
