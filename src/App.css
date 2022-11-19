@@ -1,24 +1,21 @@
 @import url("https://fonts.googleapis.com/css2?family=Michroma&display=swap");
 
 .app {
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
 
 .app img {
-  max-width: 170px;
+  max-width: 20%;
 }
 
 .card {
   font-family: "Michroma", sans-serif;
 }
 
-.card svg {
-  transform: rotate(45deg) !important;
-}
 
 .card-front,
 .card-back {
@@ -68,6 +65,7 @@
 }
 
 .card-front img, .card-back img {
+  max-width: 70%;
   min-width: 70%;
 }
 
