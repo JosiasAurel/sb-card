@@ -1,245 +1,133 @@
-import { useState } from "react";
-import { Radio, Text, Card, Spacer, Input } from "@geist-ui/core";
-import { Wifi } from "@geist-ui/icons";
-import QRCode from "./assets/qr.png";
+import { useState, useEffect } from "react";
+import { Radio, Text, Card, Spacer, Input, Button } from "@geist-ui/core";
+import { toPng } from "html-to-image";
+import { renderToStaticMarkup } from "react-dom/server";
+import download from "downloadjs";
+
+// white variants
+import WhiteFront from "./assets/blanc.png";
+import WhiteBack from "./assets/dos-blanc.png";
+
+// gold variants
+import GoldFront from "./assets/face-gold.png";
+import GoldCustom from "./assets/gold.png";
+
+// silver variant
+import SilverFront from "./assets/silver.png";
+
+// black variant
+import BlackFront from "./assets/noir.png";
+
+import SBLogo from "./assets/logo-sbcard.png";
+
+type Variant = "Gold" | "White" | "Black" | "Silver";
+type Type = "Team" | "Classic";
 
 function App() {
-  const [color, setColor] = useState<string>("black");
-  const [vertical, setVertical] = useState<boolean>(false);
+  const [variant, setVariant] = useState<Variant>("Gold");
+  const [type, setType] = useState<Type>("Classic");
 
-  const toggleColor = (): void =>
-    color === "white" ? setColor("black") : setColor("white");
+  const [name, setName] = useState<string>("");
+  const [position, setPosition] = useState<string>("");
 
-  const [name, setName] = useState<string>("Nom et Prenom");
-  const [position, setPosition] = useState<string>("Fonction");
-  const [tel, setTel] = useState<number>(237656047446);
+  const [logo, setLogo] = useState<any>(SBLogo);
+
+  const cardChangeHandler = (value: Variant) => setVariant(value);
+
+  const cardTypeChangeHandler = (value: Type) => setType(value);
+
 
   return (
     <div className="app">
       <div className="editor">
         <Text h1>Customiser votre SB Card</Text>
-        <Text h2>Choissiser votre couleur</Text>
-        <Radio.Group useRow>
+    <Radio.Group value={type} onChange={e => cardTypeChangeHandler(e as Type)} useRow>
           <Radio
-            value="black"
-            onClick={toggleColor}
-            checked={color === "black" ? true : false}
+            value="Classic"
+          >
+            Classique
+          </Radio>
+          <Radio
+            value="Team"
+          >
+            SB Team
+          </Radio>
+          </Radio.Group>
+        <Text h2>Choissiser votre couleur</Text>
+        <Radio.Group value={variant} onChange={e => cardChangeHandler(e as Variant)} useRow>
+          <Radio
+            value="Black"
           >
             Noir
           </Radio>
           <Radio
-            value="white"
-            onClick={toggleColor}
-            checked={color === "white" ? true : false}
+            value="White"
           >
             Blanc
           </Radio>
           <Radio
-            value="white"
-            onClick={toggleColor}
-            checked={color === "white" ? true : false}
+            value="Gold"
           >
             Gold
           </Radio>
           <Radio
-            value="white"
-            onClick={toggleColor}
-            checked={color === "white" ? true : false}
+            value="Silver"
           >
-            Team
+            Silver
           </Radio>
 
-        </Radio.Group>
-
-        <Text h2>Orientation</Text>
-        <Radio.Group useRow>
-          <Radio
-            value="black"
-            onClick={(_) => setVertical(!vertical)}
-            checked={!vertical}
-          >
-            Horizontale
-          </Radio>
-          <Radio
-            value="white"
-            onClick={(_) => setVertical(!vertical)}
-            checked={vertical}
-          >
-            Verticale
-          </Radio>
         </Radio.Group>
 
         <Text h2>Vos Informations</Text>
-        <Input
+        {type === "Team" ? 
+          <>
+<Input
           clearable
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder="Nom"
-        />
-        <Spacer />
+        /> 
+            <Spacer />
         <Input
+          htmlType="file"
+          id="file"
+          onChange={() => {
+            const filesEl = document.getElementById("file") as any;
+            const file = filesEl.files[0];
+            const reader = new FileReader();
+            reader.onloadend = function() {
+              setLogo(reader.result);
+            };
+            reader.readAsDataURL(file);
+            // setLogo(imageFile);
+          }}
+        /> 
+          </>: ""}
+        <Spacer />
+        { type === "Classic" ?<Input
           clearable
           value={position}
           onChange={(e) => setPosition(e.target.value)}
-          placeholder="Votre Poste"
-        />
+          placeholder="Votre Poste e.g CEO"
+        /> : ""}
         <Spacer />
-        <Input
-          clearable
-          value={tel.toString()}
-          onChange={(e) => setTel(parseInt(e.target.value))}
-          placeholder="Telephone"
-        />
+        <Button onClick={_ => toPng(document.getElementById("image") as HTMLElement).then(dataUrl => download(dataUrl))}>Telecharger</Button>
       </div>
 
-      {vertical ? (
-        <div
-          className="preview"
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-evenly",
-            alignItems: "center",
-          }}
-        >
-          <Card
-            shadow
-            type={color === "black" ? "dark" : "default"}
-            style={{
-              width: "250px",
-              height: "400px",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "space-between",
-            }}
-            className="card"
-          >
-            <Card.Content
-              style={{
-                display: "flex",
-                justifyContent: "flex-end",
-              }}
-            >
-              <Wifi style={{ transform: "rotate(45deg)" }} />
-            </Card.Content>
-
-            <div style={{ textAlign: "center" }}>
-              <Text h1 style={{ fontWeight: "bolder" }}>
-                SB
-              </Text>
-              <Text h3>Card</Text>
+      <div className="preview" id="image">
+        <img className="sbLogo" src={logo} id="imageCont" alt="sb-logo" />
+        <Text className="position" h4> {type === "Classic" ? position : name} {name === "" && position === "" ? "CEO" : ""} </Text>
+<>
+            <div className="card-front">
+              <img src={variant === "White" ? WhiteFront : variant === "Gold" ? GoldFront : variant === "Silver" ? SilverFront : BlackFront} />
             </div>
-
-            <Card.Content>SBCard</Card.Content>
-          </Card>
-          <Spacer />
-          <Card
-            shadow
-            type={color === "black" ? "dark" : "default"}
-            style={{
-              width: "250px",
-              height: "400px",
-            }}
-            className="card"
-          >
-            <Card.Content
-              style={
-                vertical
-                  ? {
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                  }
-                  : {}
-              }
-              className="backCard"
-            >
-              <div>
-                <Text>{name}</Text>
-                <Text style={{ fontWeight: "bold" }}>{position}</Text>
-                <Text>+{tel}</Text>
-              </div>
-              {color === "white" ? (
-                <img src={QRCode} alt="qr-code" />
-              ) : (
-                <img
-                  style={{
-                    backgroundColor: "white",
-                    borderRadius: "8px",
-                  }}
-                  src={QRCode}
-                  alt="qr-code"
-                />
-              )}
-            </Card.Content>
-          </Card>
-        </div>
-      ) : (
-        <div className="preview">
-          <Card
-            shadow
-            type={color === "black" ? "dark" : "default"}
-            style={{
-              width: "400px",
-              height: "250px",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "space-between",
-            }}
-            className="card"
-          >
-            <Card.Content
-              style={{
-                display: "flex",
-                justifyContent: "flex-end",
-              }}
-            >
-              <Wifi style={{ transform: "rotate(45deg)" }} />
-            </Card.Content>
-
-            <div style={{ textAlign: "center" }}>
-              <Text h1 style={{ fontWeight: "bolder" }}>
-                SB
-              </Text>
-              <Text h3>Card</Text>
+            <div className="card-back">
+              <img src={WhiteBack} />
             </div>
-
-            <Card.Content>SBCard</Card.Content>
-          </Card>
-          <Spacer />
-          <Card
-            shadow
-            type={color === "black" ? "dark" : "default"}
-            style={{
-              width: "400px",
-              height: "250px",
-            }}
-            className="card"
-          >
-            <Card.Content className="backCard">
-              <div>
-                <Text>{name}</Text>
-                <Text style={{ fontWeight: "bold" }}>{position}</Text>
-                <Text>+{tel}</Text>
-              </div>
-              {color === "white" ? (
-                <img src={QRCode} alt="qr-code" />
-              ) : (
-                <img
-                  style={{
-                    backgroundColor: "white",
-                    borderRadius: "8px",
-                  }}
-                  src={QRCode}
-                  alt="qr-code"
-                />
-              )}
-            </Card.Content>
-          </Card>
-        </div>
-      )}
-    </div>
+          </>
+      
+      </div>
+    </div >
   );
 }
 
