@@ -64,7 +64,7 @@
 
 .card-front, .card-back {
   position: relative;
-  top: -100px;
+  top: -12.5%;
 }
 
 .card-front img, .card-back img {
