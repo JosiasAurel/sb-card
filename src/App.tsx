@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useRef } from "react";
 import { Radio, Text, Card, Spacer, Input, Button } from "@geist-ui/core";
 import { toPng } from "html-to-image";
 import { renderToStaticMarkup } from "react-dom/server";
@@ -35,7 +35,6 @@ function App() {
   const cardChangeHandler = (value: Variant) => setVariant(value);
 
   const cardTypeChangeHandler = (value: Type) => setType(value);
-
 
   return (
     <div className="app">
@@ -111,10 +110,10 @@ function App() {
           placeholder="Votre Poste e.g CEO"
         /> : ""}
         <Spacer />
-        <Button onClick={_ => toPng(document.getElementById("image") as HTMLElement).then(dataUrl => download(dataUrl))}>Telecharger</Button>
+        <Button onClick={_ => toPng(document.body as HTMLElement).then(dataUrl => download(dataUrl))}>Telecharger</Button>
       </div>
 
-      <div className="preview" id="image">
+      <div className="preview" id="preview">
         <img className="sbLogo" src={logo} id="imageCont" alt="sb-logo" />
         <Text className="position" h4> {type === "Classic" ? position : name} {name === "" && position === "" ? "CEO" : ""} </Text>
 <>

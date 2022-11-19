@@ -8,6 +8,10 @@
   justify-content: space-between;
 }
 
+.app img {
+  max-width: 20%;
+}
+
 .card-front,
 .card-back {
   position: fixed;
@@ -23,6 +27,7 @@
 }
 
 .preview {
+  position: fixed;
   height: 100%;
   width: 50%;
   display: flex;
@@ -35,33 +40,28 @@
 
 .sbLogo {
   position: fixed;
-  max-width: 12.5%;
-  min-width: 12.5%;
+  max-width: 25%;
+  min-width: 25%;
   min-height: 22.7%;
-  top: 17.7%;
+  top: 27.5%;
   z-index: 2;
 }
 
 .position {
   position: relative;
-  top: 26%;
+  top: 62%;
   right: 20%;
-  max-width: 15%;
+  max-width: 20%;
   word-wrap: break-word;
   z-index: 2;
 }
 
-.card-front {
-  top: 30%;
-}
-
-.card-back {
-  top: 75%;
+.card-front, .card-back {
 }
 
 .card-front img, .card-back img {
   position: fixed;
-  max-width: 35%;
-  min-width: 35%;
+  max-width: 70%;
+  min-width: 70%;
 }
 
