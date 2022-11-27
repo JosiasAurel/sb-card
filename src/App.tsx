@@ -103,8 +103,8 @@ function App() {
         <Spacer />
         <Button
           onClick={(_) =>
-            toPng(document.getElementById("preview") as HTMLElement).then((dataUrl) =>
-              download(dataUrl)
+            toPng(document.getElementById("preview") as HTMLElement).then(
+              (dataUrl) => download(dataUrl)
             )
           }
         >
@@ -122,9 +122,9 @@ function App() {
                 ? "#FFD700"
                 : variant === "Silver"
                 ? "silver"
-                : variant === "Black" ?
-                  "black"
-                  : "white"
+                : variant === "Black"
+                ? "black"
+                : "white",
           }}
           className="card"
         >
@@ -137,10 +137,22 @@ function App() {
             <img className="neticon" src={Network} />
           </Card.Content>
 
-          <div
-            style={{ textAlign: "center" }}
-            dangerouslySetInnerHTML={{ __html: svgLogo }}
-          ></div>
+          {type === "Classic" ? (
+            <div
+              style={{ textAlign: "center" }}
+              dangerouslySetInnerHTML={{ __html: svgLogo }}
+            ></div>
+          ) : (
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <img src={logo} alt="your-logo" />
+            </div>
+          )}
 
           <Card.Content>
             <img className="miniLogo" src={MiniLogo} />
@@ -149,22 +161,34 @@ function App() {
         <Spacer />
         <Card
           shadow
-          style={{ width: "400px", height: "250px", backgroundColor:
+          style={{
+            width: "400px",
+            height: "250px",
+            backgroundColor:
               variant === "Gold"
                 ? "#FFD700"
                 : variant === "Silver"
                 ? "silver"
-                : variant === "Black" ?
-                  "black"
-                  : "white"}}
-
+                : variant === "Black"
+                ? "black"
+                : "white",
+          }}
           className="card"
         >
           <Card.Content></Card.Content>
           <Card.Content className="backCard">
             <div>
-              <Text style={{ color: variant === "Black" ? "white": "black" }}>{name}</Text>
-              <Text style={{ fontWeight: "bold", color: variant === "Black" ? "white" : "black" }}>{position}</Text>
+              <Text style={{ color: variant === "Black" ? "white" : "black" }}>
+                {name}
+              </Text>
+              <Text
+                style={{
+                  fontWeight: "bold",
+                  color: variant === "Black" ? "white" : "black",
+                }}
+              >
+                {position}
+              </Text>
             </div>
             <QRCode color={variant === "Black" ? "white" : "black"} />
           </Card.Content>
