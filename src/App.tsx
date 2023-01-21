@@ -8,98 +8,90 @@ import Network from "./assets/network.png";
 import MiniLogo from "./assets/petit.png";
 import { replaceFill } from "../replace";
 
-type Variant = "Gold" | "White" | "Black" | "Silver";
-type Type = "Team" | "Classic";
+type Variant = "black" | "white" | string;
 
 function App() {
-  const [variant, setVariant] = useState<Variant>("Gold");
-  const [type, setType] = useState<Type>("Classic");
+  const [variant, setVariant] = useState<Variant>("white");
 
   const [name, setName] = useState<string>("");
   const [position, setPosition] = useState<string>("");
+  const [telephone, setTelephone] = useState<string>("");
 
   const [logo, setLogo] = useState<any>(SBLogo);
 
   const [svgLogo, setSvgLogo] = useState<string>("");
   useEffect(() => {
-    setSvgLogo(
-      replaceFill(
-        variant === "White"
-          ? "black"
-          : variant === "Silver" || variant === "Black"
-          ? "white"
-          : "silver"
-      )
-    );
+    setSvgLogo(replaceFill(variant === "white" ? "black" : "white"));
   }, [variant]);
 
   const cardChangeHandler = (value: Variant) => setVariant(value);
 
-  const cardTypeChangeHandler = (value: Type) => setType(value);
+  console.log(`
+    Made by Josias Aurel
+    Contact ->
+    Twitter: @JosiasWing
+    Email: hey@josiasw.dev
+  `);
 
   return (
     <div className="app">
       <div className="editor">
-        <Text h1>Customiser votre SB Card</Text>
-        <Radio.Group
-          value={type}
-          onChange={(e) => cardTypeChangeHandler(e as Type)}
-          useRow
-        >
-          <Radio value="Classic">Classique</Radio>
-          <Radio value="Team">SB Team</Radio>
-        </Radio.Group>
         <Text h2>Choissiser votre couleur</Text>
         <Radio.Group
           value={variant}
           onChange={(e) => cardChangeHandler(e as Variant)}
           useRow
         >
-          <Radio value="Black">Noir</Radio>
-          <Radio value="White">Blanc</Radio>
-          <Radio value="Gold">Gold</Radio>
-          <Radio value="Silver">Silver</Radio>
+          <Radio value="black">Noir</Radio>
+          <Radio value="white">Blanc</Radio>
         </Radio.Group>
 
+        <Text h2>Ajouter votre fond</Text>
+        <Input
+          htmlType="color"
+          value={variant}
+          onChange={(event) => {
+            setVariant(event.target.value);
+          }}
+          placeholder="Choissiser votre fond"
+        />
+
         <Text h2>Vos Informations</Text>
-        {type === "Team" ? (
-          <>
-            <Input
-              clearable
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="Nom"
-            />
-            <Spacer />
-            <Input
-              htmlType="file"
-              id="file"
-              onChange={() => {
-                const filesEl = document.getElementById("file") as any;
-                const file = filesEl.files[0];
-                const reader = new FileReader();
-                reader.onloadend = function () {
-                  setLogo(reader.result);
-                };
-                reader.readAsDataURL(file);
-                // setLogo(imageFile);
-              }}
-            />
-          </>
-        ) : (
-          ""
-        )}
+        <Input
+          clearable
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          placeholder="Nom"
+        />
         <Spacer />
-        {type === "Classic" ? (
-          <Input
-            clearable
-            value={position}
-            onChange={(e) => setPosition(e.target.value)}
-            placeholder="Votre Poste e.g CEO"
-          />
-        ) : (
-          ""
-        )}
+        <Input
+          clearable
+          value={position}
+          onChange={(e) => setPosition(e.target.value)}
+          placeholder="Votre Poste e.g CEO"
+        />
+        <Spacer />
+        <Input
+          clearable
+          value={telephone}
+          onChange={(e) => setTelephone(e.target.value)}
+          placeholder="Votre telephone"
+        />
+        <Spacer />
+        <Input
+          htmlType="file"
+          id="file"
+          onChange={() => {
+            const filesEl = document.getElementById("file") as any;
+            const file = filesEl.files[0];
+            const reader = new FileReader();
+            reader.onloadend = function () {
+              setLogo(reader.result);
+            };
+            reader.readAsDataURL(file);
+            // setLogo(imageFile);
+          }}
+        />
         <Spacer />
         <Button
           onClick={(_) =>
@@ -117,14 +109,7 @@ function App() {
           style={{
             width: "400px",
             height: "250px",
-            backgroundColor:
-              variant === "Gold"
-                ? "#FFD700"
-                : variant === "Silver"
-                ? "silver"
-                : variant === "Black"
-                ? "black"
-                : "white",
+            backgroundColor: variant,
           }}
           className="card"
         >
@@ -137,7 +122,7 @@ function App() {
             <img className="neticon" src={Network} />
           </Card.Content>
 
-          {type === "Classic" ? (
+          {logo === SBLogo ? (
             <div
               style={{ textAlign: "center" }}
               dangerouslySetInnerHTML={{ __html: svgLogo }}
@@ -164,33 +149,39 @@ function App() {
           style={{
             width: "400px",
             height: "250px",
-            backgroundColor:
-              variant === "Gold"
-                ? "#FFD700"
-                : variant === "Silver"
-                ? "silver"
-                : variant === "Black"
-                ? "black"
-                : "white",
+            backgroundColor: "white",
           }}
           className="card"
         >
           <Card.Content></Card.Content>
           <Card.Content className="backCard">
             <div>
-              <Text style={{ color: variant === "Black" ? "white" : "black" }}>
-                {name}
+              <Text
+                style={{
+                  color: "black",
+                  marginBottom: "-1em",
+                }}
+              >
+                {name.length > 0 ? name : "John Doe"}
               </Text>
               <Text
                 style={{
-                  fontWeight: "bold",
-                  color: variant === "Black" ? "white" : "black",
+                  color: "black",
+                  marginBottom: "-1em",
                 }}
               >
-                {position}
+                {position.length > 0 ? position : "Votre poste"}
               </Text>
+              <Text
+                style={{
+                  color: "black",
+                  marginBottom: "-1em",
+                }}
+              >
+                {telephone.length > 0 ? telephone : "+237 638473754"}
+              </Text>{" "}
             </div>
-            <QRCode color={variant === "Black" ? "white" : "black"} />
+            <QRCode color={"black"} />
           </Card.Content>
 
           <Card.Content>
