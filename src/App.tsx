@@ -1,23 +1,41 @@
-import { useState, useRef, useEffect } from "react";
-import { Radio, Text, Card, Spacer, Input, Button } from "@geist-ui/core";
+import { useState, useEffect } from "react";
+import {
+  Radio,
+  Text,
+  Slider,
+  Spacer,
+  Input,
+  Button,
+  Checkbox,
+} from "@geist-ui/core";
 import { toPng } from "html-to-image";
-import { renderToStaticMarkup } from "react-dom/server";
 import download from "downloadjs";
 import SBLogo from "./assets/logo.png";
 import Network from "./assets/network.png";
 import MiniLogo from "./assets/petit.png";
 import { replaceFill } from "../replace";
+import type { Variant, Orientation, Alignment } from "./index";
+import SBCard from "./Card";
 
-type Variant = "black" | "white" | string;
+const green = "#5afc03";
 
 function App() {
   const [variant, setVariant] = useState<Variant>("white");
+  const [orientation, setOrientation] = useState<Orientation>("Vertical");
+  const [align, setAlign] = useState<Alignment>("center");
+  const [frontSize, setFrontSize] = useState<number>(14);
+  const [backSize, setBackSize] = useState<number>(8);
 
   const [name, setName] = useState<string>("");
   const [position, setPosition] = useState<string>("");
   const [telephone, setTelephone] = useState<string>("");
 
+  const [showName, setShowName] = useState<boolean>(true);
+  const [showPosition, setShowPosition] = useState<boolean>(true);
+  const [showTel, setShowTel] = useState<boolean>(true);
+
   const [logo, setLogo] = useState<any>(SBLogo);
+  const [backLogo, setBackLogo] = useState<any>();
 
   const [svgLogo, setSvgLogo] = useState<string>("");
   useEffect(() => {
@@ -25,6 +43,7 @@ function App() {
   }, [variant]);
 
   const cardChangeHandler = (value: Variant) => setVariant(value);
+  const alighChangeHandler = (value: Alignment) => setAlign(value);
 
   console.log(`
     Made by Josias Aurel
@@ -36,7 +55,7 @@ function App() {
   return (
     <div className="app">
       <div className="editor">
-        <Text h2>Choissiser votre couleur</Text>
+        <Text h2>Choissiser votre support</Text>
         <Radio.Group
           value={variant}
           onChange={(e) => cardChangeHandler(e as Variant)}
@@ -46,8 +65,34 @@ function App() {
           <Radio value="white">Blanc</Radio>
         </Radio.Group>
 
+        <Text h2>Orientation de la carte</Text>
+        <div className="flex-row" style={{ margin: "3em 0" }}>
+          <div
+            className="cardMock"
+            style={{
+              backgroundColor: orientation === "Horizontal" ? green : "grey",
+            }}
+            onClick={() => setOrientation("Horizontal")}
+          >
+            {" "}
+            {/* horizontal */}{" "}
+          </div>
+          <div
+            className="cardMock"
+            style={{
+              transform: "rotate(90deg)",
+              backgroundColor: orientation === "Vertical" ? green : "grey",
+            }}
+            onClick={() => setOrientation("Vertical")}
+          >
+            {" "}
+            {/* vertical */}{" "}
+          </div>
+        </div>
+
         <Text h2>Ajouter votre fond</Text>
         <Input
+          style={{ width: "100px" }}
           htmlType="color"
           value={variant}
           onChange={(event) => {
@@ -57,27 +102,85 @@ function App() {
         />
 
         <Text h2>Vos Informations</Text>
-        <Input
-          clearable
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="Nom"
-        />
+        <div
+          style={{
+            width: "40%",
+            display: "flex",
+            justifyContent: "space-evenly",
+            alignItems: "center",
+          }}
+        >
+          <Input
+            clearable
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Nom"
+          />
+          <Checkbox
+            scale={2}
+            checked={showName}
+            onChange={(event) => setShowName(event.target.checked)}
+          />
+        </div>
+
         <Spacer />
-        <Input
-          clearable
-          value={position}
-          onChange={(e) => setPosition(e.target.value)}
-          placeholder="Votre Poste e.g CEO"
-        />
+        <div
+          style={{
+            width: "40%",
+            display: "flex",
+            justifyContent: "space-evenly",
+            alignItems: "center",
+          }}
+        >
+          <Input
+            clearable
+            value={position}
+            onChange={(e) => setPosition(e.target.value)}
+            placeholder="Votre Poste e.g CEO"
+          />
+          <Checkbox
+            scale={2}
+            checked={showPosition}
+            onChange={(event) => setShowPosition(event.target.checked)}
+          />
+        </div>
+
         <Spacer />
-        <Input
-          clearable
-          value={telephone}
-          onChange={(e) => setTelephone(e.target.value)}
-          placeholder="Votre telephone"
-        />
+        <div
+          style={{
+            width: "40%",
+            display: "flex",
+            justifyContent: "space-evenly",
+            alignItems: "center",
+          }}
+        >
+          <Input
+            clearable
+            value={telephone}
+            onChange={(e) => setTelephone(e.target.value)}
+            placeholder="Votre telephone"
+          />
+          <Checkbox
+            scale={2}
+            checked={showTel}
+            onChange={(event) => setShowTel(event.target.checked)}
+          />
+        </div>
         <Spacer />
+
+        <Text h3>Alignement de vos informations</Text>
+        <Radio.Group
+          value={variant}
+          onChange={(e) => alighChangeHandler(e as Alignment)}
+          useRow
+        >
+          <Radio value="start">Gauche</Radio>
+          <Radio value="center">Centre</Radio>
+          <Radio value="end">Droite</Radio>
+        </Radio.Group>
+        <Spacer />
+
+        <Text h3>Ajouter un logo</Text>
         <Input
           htmlType="file"
           id="file"
@@ -93,6 +196,35 @@ function App() {
           }}
         />
         <Spacer />
+        <Slider
+          value={frontSize}
+          onChange={(value) => setFrontSize(value)}
+          style={{ width: "60%" }}
+        />
+        <Spacer />
+
+        <Text h3>Ajouter un logo de fond</Text>
+        <Input
+          htmlType="file"
+          id="file2"
+          onChange={() => {
+            const filesEl = document.getElementById("file2") as any;
+            const file = filesEl.files[0];
+            const reader = new FileReader();
+            reader.onloadend = function () {
+              setBackLogo(reader.result);
+            };
+            reader.readAsDataURL(file);
+            // setLogo(imageFile);
+          }}
+        />
+        <Spacer />
+        <Slider
+          value={backSize}
+          onChange={(value) => setBackSize(value)}
+          style={{ width: "60%" }}
+        />
+        <Spacer />
         <Button
           onClick={(_) =>
             toPng(document.getElementById("preview") as HTMLElement).then(
@@ -102,232 +234,37 @@ function App() {
         >
           Telecharger
         </Button>
-      </div>
-      <div id="preview" className="preview">
-        <Card
-          shadow
-          style={{
-            width: "400px",
-            height: "250px",
-            backgroundColor: variant,
-          }}
-          className="card"
-        >
-          <Card.Content
-            style={{
-              display: "flex",
-              justifyContent: "flex-end",
-            }}
-          >
-            <img className="neticon" src={Network} />
-          </Card.Content>
-
-          {logo === SBLogo ? (
-            <div
-              style={{ textAlign: "center" }}
-              dangerouslySetInnerHTML={{ __html: svgLogo }}
-            ></div>
-          ) : (
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <img src={logo} alt="your-logo" />
-            </div>
-          )}
-
-          <Card.Content>
-            <img className="miniLogo" src={MiniLogo} />
-          </Card.Content>
-        </Card>
         <Spacer />
-        <Card
-          shadow
-          style={{
-            width: "400px",
-            height: "250px",
-            backgroundColor: "white",
-          }}
-          className="card"
-        >
-          <Card.Content></Card.Content>
-          <Card.Content className="backCard">
-            <div>
-              <Text
-                style={{
-                  color: "black",
-                  marginBottom: "-1em",
-                }}
-              >
-                {name.length > 0 ? name : "John Doe"}
-              </Text>
-              <Text
-                style={{
-                  color: "black",
-                  marginBottom: "-1em",
-                }}
-              >
-                {position.length > 0 ? position : "Votre poste"}
-              </Text>
-              <Text
-                style={{
-                  color: "black",
-                  marginBottom: "-1em",
-                }}
-              >
-                {telephone.length > 0 ? telephone : "+237 638473754"}
-              </Text>{" "}
-            </div>
-            <QRCode color={"black"} />
-          </Card.Content>
+      </div>
 
-          <Card.Content>
-            <img className="miniLogo" src={MiniLogo} />
-          </Card.Content>
-        </Card>
+      <div
+        id="preview"
+        style={{
+          flexDirection: orientation === "Horizontal" ? "column" : "row",
+        }}
+        className="preview"
+      >
+        <SBCard
+          variant={variant}
+          orientation={orientation}
+          Network={Network}
+          logo={logo}
+          SBLogo={SBLogo}
+          svgLogo={svgLogo}
+          MiniLogo={MiniLogo}
+          name={name}
+          position={position}
+          telephone={telephone}
+          align={align}
+          frontSize={frontSize}
+          showName={showName}
+          showPosition={showPosition}
+          showTel={showTel}
+          backLogo={backLogo}
+          backSize={backSize}
+        />
       </div>
     </div>
-  );
-}
-
-function QRCode({ color }: { color: string }) {
-  return (
-    <>
-      <svg
-        version="1.0"
-        xmlns="http://www.w3.org/2000/svg"
-        width="300px"
-        fill={color}
-        height="300px"
-        viewBox="0 0 1200.000000 1200.000000"
-        preserveAspectRatio="xMidYMid meet"
-      >
-        <g
-          transform="translate(0.000000,1200.000000) scale(0.100000,-0.100000)"
-          fill={color}
-          stroke="none"
-        >
-          <path
-            d="M1300 9565 l0 -1135 1135 0 1135 0 0 1135 0 1135 -1135 0 -1135 0 0
--1135z m1940 5 l0 -810 -810 0 -810 0 0 810 0 810 810 0 810 0 0 -810z"
-          />
-          <path d="M1950 9565 l0 -485 485 0 485 0 0 485 0 485 -485 0 -485 0 0 -485z" />
-          <path
-            d="M4220 10375 l0 -325 160 0 160 0 0 -160 0 -160 160 0 160 0 0 325 0
-325 165 0 165 0 0 160 0 160 -165 0 -165 0 0 -160 0 -160 -160 0 -160 0 0 160
-0 160 -160 0 -160 0 0 -325z"
-          />
-          <path
-            d="M6162 10378 l3 -323 163 -3 162 -2 0 -160 0 -160 -325 0 -325 0 0
-325 0 325 -165 0 -165 0 0 -650 0 -650 -160 0 -160 0 -2 163 -3 162 -160 0
--160 0 0 -160 0 -160 163 -3 162 -2 0 -485 0 -485 160 0 160 0 0 -165 0 -165
--160 0 -160 0 0 -160 0 -160 160 0 160 0 0 160 0 160 165 0 165 0 0 -160 0
--160 160 0 160 0 0 325 0 325 165 0 165 0 0 -165 0 -165 160 0 160 0 0 -160 0
--160 -160 0 -160 0 0 -160 0 -160 -162 -2 -163 -3 -3 -162 -2 -163 165 0 165
-0 0 -325 0 -325 160 0 160 0 0 -160 0 -160 163 -2 162 -3 0 -160 0 -160 -487
--3 -488 -2 0 165 0 165 -160 0 -160 0 0 160 0 160 160 0 160 0 0 165 0 165
--160 0 -160 0 0 -165 0 -165 -165 0 -165 0 0 -485 0 -485 -160 0 -160 0 0 325
-0 325 -162 -2 -163 -3 -3 -322 -2 -323 -160 0 -160 0 0 325 0 325 -325 0 -325
-0 0 -165 0 -165 165 0 165 0 0 -160 0 -160 160 0 160 0 0 -165 0 -165 -325 0
--325 0 0 165 0 165 -160 0 -160 0 0 160 0 160 -165 0 -165 0 0 165 0 165 165
-0 165 0 0 160 0 160 160 0 160 0 0 165 0 165 163 -2 162 -3 3 -162 2 -163 320
-0 320 0 0 975 0 975 -160 0 -160 0 0 160 0 160 160 0 160 0 0 165 0 165 -160
-0 -160 0 0 160 0 160 -325 0 -325 0 0 -485 0 -485 165 0 165 0 -2 -162 -3
--163 -162 -3 -163 -2 0 -320 0 -320 -160 0 -160 0 0 160 0 160 -165 0 -165 0
-0 160 0 160 163 2 162 3 3 163 2 162 -165 0 -165 0 0 -165 0 -165 -325 0 -325
-0 0 -160 0 -160 -160 0 -160 0 0 325 0 325 -325 0 -325 0 0 -325 0 -325 325 0
-325 0 0 -160 0 -160 160 0 160 0 0 160 0 160 325 0 325 0 0 -160 0 -160 165 0
-165 0 0 -165 0 -165 -975 0 -975 0 0 165 0 165 -160 0 -160 0 0 -490 0 -490
-322 2 323 3 3 163 2 162 160 0 160 0 0 -165 0 -165 485 0 485 0 0 -160 0 -160
--485 0 -485 0 0 -165 0 -165 485 0 485 0 0 -160 0 -160 165 0 165 0 0 -165 0
--165 -325 0 -325 0 0 165 0 165 -162 -2 -163 -3 -3 -163 -2 -163 -158 3 -157
-3 -3 162 -2 163 -160 0 -160 0 0 160 0 160 -325 0 -325 0 0 -325 0 -325 160 0
-160 0 0 165 0 165 165 0 165 0 0 -325 0 -325 -325 0 -325 0 0 -160 0 -160 322
--2 323 -3 3 -162 2 -163 160 0 160 0 0 325 0 325 325 0 325 0 0 -160 0 -160
--162 -2 -163 -3 0 -160 0 -160 648 -3 647 -2 0 -160 0 -160 325 0 325 0 0
--165 0 -165 -160 0 -160 0 0 -485 0 -485 -165 0 -165 0 0 -325 0 -325 165 0
-165 0 0 -160 0 -160 645 0 645 0 2 322 3 323 160 0 160 0 3 -162 2 -163 160 0
-160 0 0 -160 0 -160 325 0 325 0 0 160 0 160 -325 0 -325 0 2 163 3 162 163 3
-162 2 0 160 0 160 -165 0 -165 0 0 325 0 325 165 0 165 0 0 325 0 325 325 0
-325 0 0 160 0 160 -165 0 -165 0 0 650 0 650 163 -2 162 -3 3 -163 2 -162 160
-0 160 0 0 -160 0 -160 -160 0 -160 0 0 -160 0 -160 160 0 160 0 0 -165 0 -165
-160 0 160 0 0 -325 0 -325 -160 0 -160 0 0 -485 0 -485 -160 0 -160 0 0 485 0
-485 -165 0 -165 0 0 -645 0 -645 163 -2 162 -3 3 -162 2 -163 160 0 160 0 0
-325 0 325 160 0 160 0 0 -485 0 -485 325 0 325 0 0 160 0 160 -160 0 -160 0 0
-165 0 165 160 0 160 0 0 320 0 320 165 0 165 0 0 -320 0 -320 325 0 325 0 -2
--163 -3 -162 -322 -3 -323 -2 0 -160 0 -160 485 0 485 0 0 325 0 325 485 0
-485 0 0 160 0 160 -160 0 -160 0 0 485 0 485 160 0 160 0 0 325 0 325 -160 0
--160 0 0 325 0 325 160 0 160 0 0 485 0 485 -325 0 -325 0 0 -160 0 -160 165
-0 165 0 0 -325 0 -325 -165 0 -165 0 0 160 0 160 -160 0 -160 0 0 165 0 165
--160 0 -160 0 -2 -162 -3 -163 -162 -3 -163 -2 0 -160 0 -160 165 0 165 0 0
--160 0 -160 -325 0 -325 0 0 160 0 160 -490 0 -490 0 0 160 0 160 -160 0 -160
-0 0 325 0 325 160 0 160 0 0 -160 0 -160 165 0 165 0 0 -165 0 -165 323 2 322
-3 3 162 2 163 160 0 160 0 0 160 0 160 325 0 325 0 0 165 0 165 160 0 160 0 0
-160 0 160 -160 0 -160 0 0 490 0 490 160 0 160 0 0 160 0 160 165 0 165 0 0
--160 0 -160 160 0 160 0 0 320 0 320 -325 0 -325 0 0 -160 0 -160 -160 0 -160
-0 0 325 0 325 -160 0 -160 0 0 -325 0 -325 160 0 160 0 0 -160 0 -160 -325 0
--325 0 0 485 0 485 -325 0 -325 0 0 -325 0 -325 165 0 165 0 0 -160 0 -160
--325 0 -325 0 0 810 0 810 -162 -2 -163 -3 -3 -162 -2 -163 -160 0 -160 0 0
-490 0 490 -160 0 -160 0 0 320 0 320 160 0 160 0 0 -160 0 -160 325 0 325 0 0
-485 0 485 -325 0 -325 0 0 -160 0 -160 -160 0 -160 0 0 -165 0 -165 -325 0
--325 0 0 165 0 165 160 0 160 0 0 160 0 160 -325 0 -325 0 2 -322z m1618 -163
-l0 -165 -160 0 -160 0 0 165 0 165 160 0 160 0 0 -165z m-970 -645 l0 -160
-165 0 165 0 -2 -162 -3 -163 -162 -3 -163 -2 0 165 0 165 -160 0 -160 0 0
--490 0 -490 160 0 160 0 0 165 0 165 163 -2 162 -3 3 -162 2 -163 160 0 160 0
-0 -160 0 -160 160 0 160 0 0 -485 0 -485 -160 0 -160 0 0 -165 0 -165 160 0
-160 0 0 -160 0 -160 325 0 325 0 0 -165 0 -165 165 0 165 0 0 165 0 165 160 0
-160 0 0 160 0 160 165 0 165 0 0 -485 0 -485 -165 0 -165 0 0 -165 0 -165
--160 0 -160 0 0 165 0 165 -325 0 -325 0 0 160 0 160 -162 2 -163 3 -3 163 -2
-162 -320 0 -320 0 -2 -162 -3 -163 -162 -3 -163 -2 0 325 0 325 -160 0 -160 0
-0 165 0 165 160 0 160 0 0 160 0 160 165 0 165 0 0 485 0 485 -165 0 -165 0 0
--160 0 -160 -160 0 -160 0 0 160 0 160 -165 0 -165 0 2 488 3 487 163 3 162 2
-0 160 0 160 160 0 160 0 0 -160z m-970 -815 l0 -325 -162 2 -163 3 -3 323 -2
-322 165 0 165 0 0 -325z m-1300 -160 l0 -165 -160 0 -160 0 0 165 0 165 160 0
-160 0 0 -165z m0 -1620 l0 -165 -160 0 -160 0 0 165 0 165 160 0 160 0 0 -165z
-m-650 -325 l0 -160 -160 0 -160 0 0 -165 0 -165 -165 0 -165 0 2 163 3 162
-163 3 162 2 0 160 0 160 160 0 160 0 0 -160z m4540 -1300 l0 -160 -160 0 -160
-0 0 160 0 160 160 0 160 0 0 -160z m-1940 -485 l0 -325 -165 0 -165 0 0 160 0
-160 -160 0 -160 0 0 165 0 165 325 0 325 0 0 -325z m-2600 -165 l0 -160 165 0
-165 0 0 -160 0 -160 160 0 160 0 0 -165 0 -165 160 0 160 0 2 163 3 162 163 3
-162 2 0 -165 0 -165 325 0 325 0 0 165 0 165 -165 0 -165 0 0 160 0 160 165 0
-165 0 0 -160 0 -160 323 -2 322 -3 3 -162 2 -163 -325 0 -325 0 0 -160 0 -160
--650 0 -650 0 0 160 0 160 -160 0 -160 0 0 165 0 165 -165 0 -165 0 0 160 0
-160 -160 0 -160 0 0 -160 0 -160 -165 0 -165 0 0 160 0 160 165 0 165 0 0 160
-0 160 160 0 160 0 0 -160z m970 0 l0 -160 -160 0 -160 0 0 160 0 160 160 0
-160 0 0 -160z m5190 -645 l0 -485 165 0 165 0 0 -165 0 -165 -165 0 -165 0 0
--325 0 -325 -160 0 -160 0 0 -320 0 -320 -160 0 -160 0 0 485 0 485 160 0 160
-0 0 160 0 160 160 0 160 0 0 165 0 165 -160 0 -160 0 0 485 0 485 160 0 160 0
-0 -485z m-970 -650 l0 -485 -485 0 -485 0 0 485 0 485 485 0 485 0 0 -485z
-m-3570 -650 l0 -485 -160 0 -160 0 0 -325 0 -325 -325 0 -325 0 0 165 0 165
--160 0 -160 0 0 160 0 160 160 0 160 0 0 160 0 160 323 2 322 3 3 163 2 162
--165 0 -165 0 0 160 0 160 325 0 325 0 0 -485z m650 325 l0 -160 -160 0 -160
-0 0 160 0 160 160 0 160 0 0 -160z m1950 -650 l0 -160 -165 0 -165 0 0 160 0
-160 165 0 165 0 0 -160z"
-          />
-          <path d="M8760 6000 l0 -160 160 0 160 0 0 160 0 160 -160 0 -160 0 0 -160z" />
-          <path d="M8430 3405 l0 -165 163 2 162 3 3 163 2 162 -165 0 -165 0 0 -165z" />
-          <path
-            d="M8430 9565 l0 -1135 1135 0 1135 0 0 1135 0 1135 -1135 0 -1135 0 0
--1135z m1950 5 l0 -810 -810 0 -810 0 0 810 0 810 810 0 810 0 0 -810z"
-          />
-          <path d="M9080 9565 l0 -485 485 0 485 0 0 485 0 485 -485 0 -485 0 0 -485z" />
-          <path d="M3890 9570 l0 -160 165 0 165 0 0 160 0 160 -165 0 -165 0 0 -160z" />
-          <path
-            d="M10050 6650 l0 -160 165 0 165 0 0 -325 0 -325 160 0 160 0 0 325 0
-325 -160 0 -160 0 0 160 0 160 -165 0 -165 0 0 -160z"
-          />
-          <path
-            d="M1300 2435 l0 -1135 1135 0 1135 0 0 1135 0 1135 -1135 0 -1135 0 0
--1135z m1940 -5 l0 -810 -810 0 -810 0 0 810 0 810 810 0 810 0 0 -810z"
-          />
-          <path d="M1950 2435 l0 -485 485 0 485 0 0 485 0 485 -485 0 -485 0 0 -485z" />
-          <path d="M10380 1460 l0 -160 160 0 160 0 0 160 0 160 -160 0 -160 0 0 -160z" />
-        </g>
-      </svg>
-    </>
   );
 }
 
