@@ -4,7 +4,6 @@ import type { Variant, Orientation, Alignment } from "./index";
 
 type CardProps = {
   variant: Variant;
-  orientation: Orientation;
   Network: any;
   logo: any;
   SBLogo: any;
@@ -24,7 +23,6 @@ type CardProps = {
 
 const SBCard: React.FC<CardProps> = ({
   variant,
-  orientation,
   Network,
   logo,
   SBLogo,
@@ -42,8 +40,6 @@ const SBCard: React.FC<CardProps> = ({
   backSize,
 }): JSX.Element => {
   return (
-    <>
-      {orientation === "Horizontal" ? (
         <>
           <Card
             shadow
@@ -143,7 +139,7 @@ const SBCard: React.FC<CardProps> = ({
                     : ""}
                 </Text>{" "}
               </div>
-              <QRCode color={"black"} orientation={orientation} />
+              <QRCode color={"black"} />
             </Card.Content>
 
             <Card.Content>
@@ -151,141 +147,19 @@ const SBCard: React.FC<CardProps> = ({
             </Card.Content>
           </Card>
         </>
-      ) : (
-        <>
-          <Card
-            shadow
-            style={{
-              width: "280px",
-              height: "400px",
-              backgroundColor: variant,
-            }}
-          >
-            <Card.Content
-              style={{
-                display: "flex",
-                justifyContent: "flex-end",
-              }}
-            >
-              <img className="neticon" src={Network} />
-            </Card.Content>
-
-            {logo === SBLogo ? (
-              <div
-                style={{ textAlign: "center" }}
-                dangerouslySetInnerHTML={{ __html: svgLogo }}
-              ></div>
-            ) : (
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <img
-                  style={{ transform: `scale(${frontSize})`, maxWidth: "10px" }}
-                  src={logo}
-                  alt="your-logo"
-                />
-              </div>
-            )}
-
-            <Card.Content>
-              <img className="miniLogo" src={MiniLogo} />
-            </Card.Content>
-          </Card>
-          <Spacer />
-          <Card
-            shadow
-            style={{
-              width: "280px",
-              height: "400px",
-              backgroundColor: "white",
-            }}
-            className="card"
-          >
-            <Card.Content></Card.Content>
-            <Card.Content
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "space-evenly",
-                alignItems: "center",
-              }}
-              className="backCard"
-            >
-              <div style={{ marginBottom: "1em" }}>
-                <img
-                  style={{
-                    transform: `scale(${backSize}) translateX(8px) translateY(-2px)`,
-                    maxWidth: "10px",
-                  }}
-                  src={backLogo}
-                />
-                <Text
-                  style={{
-                    color: "black",
-                    marginBottom: "-1em",
-                    textAlign: align,
-                  }}
-                >
-                  {showName ? (name.length > 0 ? name : "John Doe") : ""}
-                </Text>
-                <Text
-                  style={{
-                    color: "black",
-                    marginBottom: "-1em",
-                    textAlign: align,
-                  }}
-                >
-                  {showPosition
-                    ? position.length > 0
-                      ? position
-                      : "Votre poste"
-                    : ""}
-                </Text>
-                <Text
-                  style={{
-                    color: "black",
-                    marginBottom: "-1em",
-                    textAlign: align,
-                  }}
-                >
-                  {showTel
-                    ? telephone.length > 0
-                      ? telephone
-                      : "+237 638473754"
-                    : ""}
-                </Text>{" "}
-              </div>
-              <QRCode color={"black"} orientation={orientation} />
-            </Card.Content>
-
-            <Card.Content>
-              <img className="miniLogo" src={MiniLogo} />
-            </Card.Content>
-          </Card>
-        </>
-      )}
-    </>
   );
 };
 
 function QRCode({
   color,
-  orientation,
 }: {
   color: string;
-  orientation: Orientation;
 }) {
   return (
     <>
       <svg
         style={{
-          transform: `scale(1.4) ${
-            orientation === "Horizontal" ? "translateX(20px)" : ""
-          } translateY(7px)`,
+          transform: "scale(1.4) translateX(20px)",
         }}
         version="1.0"
         xmlns="http://www.w3.org/2000/svg"

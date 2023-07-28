@@ -21,7 +21,6 @@ const green = "#5afc03";
 
 function App() {
   const [variant, setVariant] = useState<Variant>("white");
-  const [orientation, setOrientation] = useState<Orientation>("Vertical");
   const [align, setAlign] = useState<Alignment>("center");
   const [frontSize, setFrontSize] = useState<number>(14);
   const [backSize, setBackSize] = useState<number>(8);
@@ -55,40 +54,6 @@ function App() {
   return (
     <div className="app">
       <div className="editor">
-        <Text h2>Choissiser votre support</Text>
-        <Radio.Group
-          value={variant}
-          onChange={(e) => cardChangeHandler(e as Variant)}
-          useRow
-        >
-          <Radio value="black">Noir</Radio>
-          <Radio value="white">Blanc</Radio>
-        </Radio.Group>
-
-        <Text h2>Orientation de la carte</Text>
-        <div className="flex-row" style={{ margin: "3em 0" }}>
-          <div
-            className="cardMock"
-            style={{
-              backgroundColor: orientation === "Horizontal" ? green : "grey",
-            }}
-            onClick={() => setOrientation("Horizontal")}
-          >
-            {" "}
-            {/* horizontal */}{" "}
-          </div>
-          <div
-            className="cardMock"
-            style={{
-              transform: "rotate(90deg)",
-              backgroundColor: orientation === "Vertical" ? green : "grey",
-            }}
-            onClick={() => setOrientation("Vertical")}
-          >
-            {" "}
-            {/* vertical */}{" "}
-          </div>
-        </div>
 
         <Text h2>Ajouter votre fond</Text>
         <Input
@@ -200,6 +165,7 @@ function App() {
           value={frontSize}
           onChange={(value) => setFrontSize(value)}
           style={{ width: "60%" }}
+          max={16}
         />
         <Spacer />
 
@@ -240,13 +206,12 @@ function App() {
       <div
         id="preview"
         style={{
-          flexDirection: orientation === "Horizontal" ? "column" : "row",
+          flexDirection: "column",
         }}
         className="preview"
       >
         <SBCard
           variant={variant}
-          orientation={orientation}
           Network={Network}
           logo={logo}
           SBLogo={SBLogo}
