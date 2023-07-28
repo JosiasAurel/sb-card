@@ -14,8 +14,8 @@ import SBLogo from "./assets/logo.png";
 import Network from "./assets/network.png";
 import MiniLogo from "./assets/petit.png";
 import { replaceFill } from "../replace";
-import type { Variant, Orientation, Alignment } from "./index";
 import SBCard from "./Card";
+import type { Variant, Alignment } from "./types";
 
 const green = "#5afc03";
 

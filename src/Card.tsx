@@ -1,6 +1,6 @@
 import React from "react";
 import { Spacer, Card, Text } from "@geist-ui/core";
-import type { Variant, Orientation, Alignment } from "./index";
+import type { Variant, Alignment } from "./types";
 
 type CardProps = {
   variant: Variant;
