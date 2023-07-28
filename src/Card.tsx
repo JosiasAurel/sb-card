@@ -84,6 +84,9 @@ const SBCard: React.FC<CardProps> = ({
         </Card.Content>
       </Card>
       <Spacer />
+
+      {/* back of card now*/}
+
       <Card
         shadow
         style={{
@@ -93,7 +96,16 @@ const SBCard: React.FC<CardProps> = ({
         }}
         className="card"
       >
-        <Card.Content></Card.Content>
+        <Card.Content
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "flex-end",
+            justifyContent: "flex-end",
+          }}
+        >
+          <img className="neticon" src={Network} />
+        </Card.Content>
         <Card.Content className="backCard">
           <div>
             <Text
@@ -132,11 +144,18 @@ const SBCard: React.FC<CardProps> = ({
                 : ""}
             </Text>{" "}
           </div>
-          <QRCode color={"black"} />
+          <QRCode color={textColor} />
         </Card.Content>
 
         <Card.Content>
-          <img className="miniLogo" src={MiniLogo} />
+          <img
+            style={{
+              position: "relative",
+              top: "-20px",
+            }}
+            className="miniLogo"
+            src={MiniLogo}
+          />
         </Card.Content>
       </Card>
     </>

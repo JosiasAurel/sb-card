@@ -177,13 +177,7 @@ function App() {
           style={{ width: "60%" }}
           max={16}
         />
-        <Spacer />
 
-        <Slider
-          value={backSize}
-          onChange={(value) => setBackSize(value)}
-          style={{ width: "60%" }}
-        />
         <Spacer />
         <Button
           onClick={(_) =>
