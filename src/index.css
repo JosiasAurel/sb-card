@@ -29,6 +29,41 @@ body {
   max-height: 100vh;
 }
 
+.index {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: row;
+  height: 100vh;
+}
+
+.index ul {
+  list-style-type: none;
+}
+
+.index ul li {
+  font-size: 1.5em;
+}
+
+.index ul li::before {
+  content: "✔️ "
+}
+
+.nav-class, .nav-pro {
+  height: 100vh;
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.nav-class {
+}
+
+.nav-pro {
+  background: rgb(2,0,36);
+background: linear-gradient(135deg, rgba(2,0,36,1) 1%, rgba(155,123,238,1) 22%, rgba(0,212,255,1) 72%);
+}
+
 .app {
   margin: 0 2em;
   display: flex;
@@ -116,4 +151,10 @@ body {
 
 .backCard svg {
   transform: scale(1.4) translateX(20px) translateY(7px);
+}
+
+@media screen and (max-width: 1000px) {
+  .app {
+    flex-direction: column;
+  }
 }
