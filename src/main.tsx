@@ -9,5 +9,5 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
     <React.StrictMode>
       <AppController />
     </React.StrictMode>
-  </GeistProvider>
+  </GeistProvider>,
 );

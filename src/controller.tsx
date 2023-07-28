@@ -6,15 +6,15 @@ import Index from ".";
 type AppMood = "main" | "pro" | "classic";
 
 export default function AppController() {
-    const [mood, setMood] = useState<AppMood>("main");
+  const [mood, setMood] = useState<AppMood>("main");
 
-    switch (mood) {
-        case "main": {
-            return <Index />
-        }
-        case "classic": 
-            return <App />
-        case "pro":
-            return <App />
+  switch (mood) {
+    case "main": {
+      return <Index setPage={setMood} />;
     }
+    case "classic":
+      return <App />;
+    case "pro":
+      return <App />;
+  }
 }

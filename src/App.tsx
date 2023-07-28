@@ -228,7 +228,7 @@ function App() {
         <Button
           onClick={(_) =>
             toPng(document.getElementById("preview") as HTMLElement).then(
-              (dataUrl) => download(dataUrl)
+              (dataUrl) => download(dataUrl),
             )
           }
         >
