@@ -24,6 +24,7 @@ function App() {
   const [align, setAlign] = useState<Alignment>("center");
   const [frontSize, setFrontSize] = useState<number>(14);
   const [backSize, setBackSize] = useState<number>(8);
+  const [textColor, setTextColor] = useState<"black" | string>("black");
 
   const [name, setName] = useState<string>("");
   const [position, setPosition] = useState<string>("");
@@ -34,7 +35,6 @@ function App() {
   const [showTel, setShowTel] = useState<boolean>(true);
 
   const [logo, setLogo] = useState<any>(SBLogo);
-  const [backLogo, setBackLogo] = useState<any>();
 
   const [svgLogo, setSvgLogo] = useState<string>("");
   useEffect(() => {
@@ -54,7 +54,6 @@ function App() {
   return (
     <div className="app">
       <div className="editor">
-
         <Text h2>Ajouter votre fond</Text>
         <Input
           style={{ width: "100px" }}
@@ -64,6 +63,17 @@ function App() {
             setVariant(event.target.value);
           }}
           placeholder="Choissiser votre fond"
+        />
+
+        <Text h2>Changer la couleur du texte</Text>
+        <Input
+          style={{ width: "100px" }}
+          htmlType="color"
+          value={textColor}
+          onChange={(event) => {
+            setTextColor(event.target.value);
+          }}
+          placeholder="Choissisez la couleur du text"
         />
 
         <Text h2>Vos Informations</Text>
@@ -169,22 +179,6 @@ function App() {
         />
         <Spacer />
 
-        <Text h3>Ajouter un logo de fond</Text>
-        <Input
-          htmlType="file"
-          id="file2"
-          onChange={() => {
-            const filesEl = document.getElementById("file2") as any;
-            const file = filesEl.files[0];
-            const reader = new FileReader();
-            reader.onloadend = function () {
-              setBackLogo(reader.result);
-            };
-            reader.readAsDataURL(file);
-            // setLogo(imageFile);
-          }}
-        />
-        <Spacer />
         <Slider
           value={backSize}
           onChange={(value) => setBackSize(value)}
@@ -225,8 +219,8 @@ function App() {
           showName={showName}
           showPosition={showPosition}
           showTel={showTel}
-          backLogo={backLogo}
           backSize={backSize}
+          textColor={textColor}
         />
       </div>
     </div>

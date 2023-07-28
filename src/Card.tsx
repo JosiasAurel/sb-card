@@ -17,8 +17,8 @@ type CardProps = {
   showName: boolean;
   showPosition: boolean;
   showTel: boolean;
-  backLogo: any;
   backSize: number;
+  textColor: string | "black";
 };
 
 const SBCard: React.FC<CardProps> = ({
@@ -36,125 +36,114 @@ const SBCard: React.FC<CardProps> = ({
   showName,
   showPosition,
   showTel,
-  backLogo,
   backSize,
+  textColor,
 }): JSX.Element => {
   return (
-        <>
-          <Card
-            shadow
+    <>
+      <Card
+        shadow
+        style={{
+          width: "400px",
+          height: "250px",
+          backgroundColor: variant,
+        }}
+      >
+        <Card.Content
+          style={{
+            display: "flex",
+            justifyContent: "flex-end",
+          }}
+        >
+          <img className="neticon" src={Network} />
+        </Card.Content>
+
+        {logo === SBLogo ? (
+          <div
+            style={{ textAlign: "center" }}
+            dangerouslySetInnerHTML={{ __html: svgLogo }}
+          ></div>
+        ) : (
+          <div
             style={{
-              width: "400px",
-              height: "250px",
-              backgroundColor: variant,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
             }}
           >
-            <Card.Content
+            <img
+              style={{ transform: `scale(${frontSize})`, maxWidth: "10px" }}
+              src={logo}
+              alt="your-logo"
+            />
+          </div>
+        )}
+
+        <Card.Content>
+          <img className="miniLogo" src={MiniLogo} />
+        </Card.Content>
+      </Card>
+      <Spacer />
+      <Card
+        shadow
+        style={{
+          width: "400px",
+          height: "250px",
+          backgroundColor: variant,
+        }}
+        className="card"
+      >
+        <Card.Content></Card.Content>
+        <Card.Content className="backCard">
+          <div>
+            <Text
               style={{
-                display: "flex",
-                justifyContent: "flex-end",
+                color: textColor,
+                marginBottom: "-1em",
+                textAlign: align,
               }}
             >
-              <img className="neticon" src={Network} />
-            </Card.Content>
+              {showName ? (name.length > 0 ? name : "John Doe") : ""}
+            </Text>
+            <Text
+              style={{
+                color: textColor,
+                marginBottom: "-1em",
+                textAlign: align,
+              }}
+            >
+              {showPosition
+                ? position.length > 0
+                  ? position
+                  : "Votre poste"
+                : ""}
+            </Text>
+            <Text
+              style={{
+                color: textColor,
+                marginBottom: "-1em",
+                textAlign: align,
+              }}
+            >
+              {showTel
+                ? telephone.length > 0
+                  ? telephone
+                  : "+237 638473754"
+                : ""}
+            </Text>{" "}
+          </div>
+          <QRCode color={"black"} />
+        </Card.Content>
 
-            {logo === SBLogo ? (
-              <div
-                style={{ textAlign: "center" }}
-                dangerouslySetInnerHTML={{ __html: svgLogo }}
-              ></div>
-            ) : (
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <img
-                  style={{ transform: `scale(${frontSize})`, maxWidth: "10px" }}
-                  src={logo}
-                  alt="your-logo"
-                />
-              </div>
-            )}
-
-            <Card.Content>
-              <img className="miniLogo" src={MiniLogo} />
-            </Card.Content>
-          </Card>
-          <Spacer />
-          <Card
-            shadow
-            style={{
-              width: "400px",
-              height: "250px",
-              backgroundColor: "white",
-            }}
-            className="card"
-          >
-            <Card.Content></Card.Content>
-            <Card.Content className="backCard">
-              <div>
-                <img
-                  style={{
-                    transform: `scale(${backSize}) translateX(8px) translateY(-2px)`,
-                    maxWidth: "10px",
-                  }}
-                  src={backLogo}
-                />
-                <Text
-                  style={{
-                    color: "black",
-                    marginBottom: "-1em",
-                    textAlign: align,
-                  }}
-                >
-                  {showName ? (name.length > 0 ? name : "John Doe") : ""}
-                </Text>
-                <Text
-                  style={{
-                    color: "black",
-                    marginBottom: "-1em",
-                    textAlign: align,
-                  }}
-                >
-                  {showPosition
-                    ? position.length > 0
-                      ? position
-                      : "Votre poste"
-                    : ""}
-                </Text>
-                <Text
-                  style={{
-                    color: "black",
-                    marginBottom: "-1em",
-                    textAlign: align,
-                  }}
-                >
-                  {showTel
-                    ? telephone.length > 0
-                      ? telephone
-                      : "+237 638473754"
-                    : ""}
-                </Text>{" "}
-              </div>
-              <QRCode color={"black"} />
-            </Card.Content>
-
-            <Card.Content>
-              <img className="miniLogo" src={MiniLogo} />
-            </Card.Content>
-          </Card>
-        </>
+        <Card.Content>
+          <img className="miniLogo" src={MiniLogo} />
+        </Card.Content>
+      </Card>
+    </>
   );
 };
 
-function QRCode({
-  color,
-}: {
-  color: string;
-}) {
+function QRCode({ color }: { color: string }) {
   return (
     <>
       <svg
