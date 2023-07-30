@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import App from "./App";
+import ClassicApp from "./ClassicApp";
 import Index from ".";
 
 // the app mood basically represents whether it's on the main, classic or pro page
@@ -13,7 +14,7 @@ export default function AppController() {
       return <Index setPage={setMood} />;
     }
     case "classic":
-      return <App />;
+      return <ClassicApp />;
     case "pro":
       return <App />;
   }

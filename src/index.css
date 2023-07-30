@@ -57,8 +57,6 @@ body {
   justify-content: center;
   align-items: center;
 }
-.nav-class {
-}
 
 .nav-pro {
   background: rgb(2, 0, 36);
@@ -123,13 +121,8 @@ body {
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
-}
-
-.backCardMain {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
+  position: relative;
+  top: -20px;
 }
 
 .preview {
@@ -143,24 +136,150 @@ body {
   margin-right: 2em;
 }
 
-.neticon {
-  max-width: 50px !important;
-}
-
 ::-webkit-scrollbar {
   display: none;
-}
-
-.miniLogo {
-  max-width: 80px !important;
-}
-
-.backCard svg {
-  transform: scale(1.4) translateX(20px) translateY(7px);
 }
 
 @media screen and (max-width: 1000px) {
   .app {
     flex-direction: column;
   }
+}
+
+.wifi {
+  position: relative;
+  top: -20px;
+  right: -30px;
+}
+
+.verso .minilogo {
+  position: relative;
+  top: -60px;
+}
+.recto .minilogo {
+  position: relative;
+  top: -30px;
+}
+
+.cls-1 {
+  fill: url(#linear-gradient);
+}
+
+.cls-2 {
+  fill: url(#linear-gradient-2);
+}
+
+.cls-3 {
+  fill: url(#linear-gradient-3);
+}
+
+.cls-4 {
+  fill: url(#linear-gradient-4);
+}
+
+.cls-5 {
+  fill: url(#linear-gradient-5);
+}
+
+.cls-6 {
+  fill: url(#linear-gradient-6);
+}
+
+.cls-7 {
+  fill: url(#linear-gradient-7);
+}
+
+.cls-8 {
+  fill: url(#linear-gradient-8);
+}
+
+.cls-9 {
+  fill: url(#linear-gradient-9);
+}
+
+.cls-10 {
+  fill: url(#linear-gradient-10);
+}
+
+.cls-11 {
+  fill: url(#linear-gradient-11);
+}
+
+.cls-12 {
+  fill: url(#linear-gradient-12);
+}
+
+.cls-13 {
+  fill: url(#linear-gradient-13);
+}
+
+.cls-14 {
+  fill: url(#linear-gradient-14);
+}
+
+.cls-15 {
+  fill: url(#linear-gradient-15);
+}
+
+.cls-16 {
+  fill: url(#linear-gradient-16);
+}
+
+.cls-17 {
+  fill: url(#linear-gradient-17);
+}
+
+.cls-18 {
+  clip-path: url(#clip-path-9);
+}
+
+.cls-19 {
+  fill: url(#linear-gradient-9);
+}
+
+.cls-20 {
+  clip-path: url(#clip-path-10);
+}
+
+.cls-21 {
+  fill: url(#linear-gradient-10);
+}
+
+.cls-22 {
+  clip-path: url(#clip-path-11);
+}
+
+.cls-23 {
+  fill: url(#linear-gradient-11);
+}
+
+.cls-18 {
+  clip-path: url(#clip-path-9);
+}
+
+.cls-19 {
+  fill: url(#linear-gradient-9);
+}
+
+.cls-20 {
+  clip-path: url(#clip-path-10);
+}
+
+.cls-21 {
+  fill: url(#linear-gradient-10);
+}
+
+.cls-22 {
+  clip-path: url(#clip-path-11);
+}
+
+.cls-23 {
+  fill: url(#linear-gradient-11);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
 }

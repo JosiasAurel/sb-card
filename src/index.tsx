@@ -19,7 +19,9 @@ export default function Index({ setPage }: Props) {
             <li>Mise a jour en temps reel gratuitement</li>
           </ul>
           <Text h2>a partir de 5 euros</Text>
-          <Button type="secondary">Commander</Button>
+          <Button type="secondary" onClick={() => setPage("classic")}>
+            Commander
+          </Button>
         </div>
       </div>
 

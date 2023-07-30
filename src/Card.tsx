@@ -1,6 +1,10 @@
 import React from "react";
 import { Spacer, Card, Text } from "@geist-ui/core";
 import type { Variant, Alignment } from "./types";
+import Wifi from "./Wifi";
+import SBC from "./SBC";
+import ClassicLogo from "./CLogo";
+import MiniLogo from "./MiniLogo";
 
 type CardProps = {
   variant: Variant;
@@ -27,7 +31,6 @@ const SBCard: React.FC<CardProps> = ({
   logo,
   SBLogo,
   svgLogo,
-  MiniLogo,
   name,
   position,
   telephone,
@@ -48,14 +51,16 @@ const SBCard: React.FC<CardProps> = ({
           height: "250px",
           backgroundColor: variant,
         }}
+        className="recto"
       >
         <Card.Content
           style={{
             display: "flex",
             justifyContent: "flex-end",
+            position: "relative",
           }}
         >
-          <img className="neticon" src={Network} />
+          <Wifi />
         </Card.Content>
 
         {logo === SBLogo ? (
@@ -80,7 +85,7 @@ const SBCard: React.FC<CardProps> = ({
         )}
 
         <Card.Content>
-          <img className="miniLogo" src={MiniLogo} />
+          <MiniLogo visible={true} />
         </Card.Content>
       </Card>
       <Spacer />
@@ -94,7 +99,7 @@ const SBCard: React.FC<CardProps> = ({
           height: "250px",
           backgroundColor: variant,
         }}
-        className="card"
+        className="card verso"
       >
         <Card.Content
           style={{
@@ -104,7 +109,7 @@ const SBCard: React.FC<CardProps> = ({
             justifyContent: "flex-end",
           }}
         >
-          <img className="neticon" src={Network} />
+          <Wifi />
         </Card.Content>
         <Card.Content className="backCard">
           <div>
@@ -148,14 +153,96 @@ const SBCard: React.FC<CardProps> = ({
         </Card.Content>
 
         <Card.Content>
-          <img
-            style={{
-              position: "relative",
-              top: "-20px",
-            }}
-            className="miniLogo"
-            src={MiniLogo}
-          />
+          <MiniLogo visible={true} />
+        </Card.Content>
+      </Card>
+    </>
+  );
+};
+
+export const Classic: React.FC<
+  CardProps & { color?: "white" | "black" | "blue" }
+> = ({
+  variant,
+  Network,
+  logo,
+  SBLogo,
+  svgLogo,
+  name,
+  position,
+  telephone,
+  align,
+  frontSize,
+  showName,
+  showPosition,
+  showTel,
+  backSize,
+  textColor,
+  color,
+}): JSX.Element => {
+  return (
+    <>
+      <Card
+        shadow
+        style={{
+          width: "400px",
+          height: "250px",
+          background:
+            color != "blue"
+              ? color
+              : "linear-gradient(130deg, rgba(0,159,227,1) 0%, rgba(99,44,135,1) 92%, rgba(103,39,131,1) 100%, rgba(0,212,255,1) 100%, rgba(0,212,255,1) 100%)",
+        }}
+        className="card"
+      >
+        <Card.Content
+          style={{
+            display: "flex",
+            justifyContent: "flex-end",
+          }}
+        >
+          <Wifi />
+        </Card.Content>
+
+        <ClassicLogo />
+
+        <Card.Content>
+          <MiniLogo visible={false} />
+        </Card.Content>
+      </Card>
+      <Spacer />
+
+      {/* back of card now*/}
+
+      <Card
+        shadow
+        style={{
+          width: "400px",
+          height: "250px",
+          background:
+            color != "blue"
+              ? color
+              : "linear-gradient(130deg, rgba(0,159,227,1) 0%, rgba(99,44,135,1) 92%, rgba(103,39,131,1) 100%, rgba(0,212,255,1) 100%, rgba(0,212,255,1) 100%)",
+        }}
+        className="card verso"
+      >
+        <Card.Content
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "flex-end",
+            justifyContent: "flex-end",
+          }}
+        >
+          <Wifi />
+        </Card.Content>
+
+        <Card.Content className="backCard">
+          {color == "white" ? <SBC /> : <SBC />}
+          <QRCode color={textColor} />
+        </Card.Content>
+
+        <Card.Content>
+          <MiniLogo visible={true} />
         </Card.Content>
       </Card>
     </>
@@ -168,6 +255,7 @@ function QRCode({ color }: { color: string }) {
       <svg
         style={{
           transform: "scale(1.4) translateX(20px)",
+          backgroundColor: "white",
         }}
         version="1.0"
         xmlns="http://www.w3.org/2000/svg"

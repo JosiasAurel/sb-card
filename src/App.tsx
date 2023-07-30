@@ -11,7 +11,7 @@ import {
 import { toPng } from "html-to-image";
 import download from "downloadjs";
 import SBLogo from "./assets/logo.png";
-import Network from "./assets/network.png";
+import Network from "./assets/wifi.svg";
 import MiniLogo from "./assets/petit.png";
 import { replaceFill } from "../replace";
 import SBCard from "./Card";

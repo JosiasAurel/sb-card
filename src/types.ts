@@ -1,10 +1,5 @@
+type Variant = "black" | "white" | string;
+type Orientation = "Vertical" | "Horizontal";
+type Alignment = "start" | "center" | "end";
 
- type Variant = "black" | "white" | string;
- type Orientation = "Vertical" | "Horizontal";
- type Alignment = "start" | "center" | "end";
-
-export type {
-    Variant,
-    Orientation,
-    Alignment
-}
+export type { Variant, Orientation, Alignment };
