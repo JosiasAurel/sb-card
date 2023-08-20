@@ -21,7 +21,7 @@ const green = "#5afc03";
 
 function App() {
   const [variant, setVariant] = useState<Variant>("#ffffff");
-  const [align, setAlign] = useState<Alignment>("center");
+  const [align, setAlign] = useState<Alignment>("start");
   const [frontSize, setFrontSize] = useState<number>(14);
   const [backSize, setBackSize] = useState<number>(8);
   const [textColor, setTextColor] = useState<"black" | string>("black");
@@ -44,14 +44,12 @@ function App() {
   const cardChangeHandler = (value: Variant) => setVariant(value);
   const alighChangeHandler = (value: Alignment) => setAlign(value);
 
-  /*
   console.log(`
     Made by Josias Aurel
     Contact ->
     Twitter: @JosiasWing
     Email: hey@josiasw.dev
   `);
-  */
 
   return (
     <div className="app">
@@ -143,18 +141,6 @@ function App() {
             onChange={(event) => setShowTel(event.target.checked)}
           />
         </div>
-        <Spacer />
-
-        <Text h3>Alignement de vos informations</Text>
-        <Radio.Group
-          value={variant}
-          onChange={(e) => alighChangeHandler(e as Alignment)}
-          useRow
-        >
-          <Radio value="start" checked={align == "start"}>Gauche</Radio>
-          <Radio value="center" checked={align == "center"}>Centre</Radio>
-          <Radio value="end" checked={align == "end"}>Droite</Radio>
-        </Radio.Group>
         <Spacer />
 
         <Text h3>Ajouter un logo</Text>

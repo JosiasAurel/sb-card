@@ -143,7 +143,7 @@ const SBCard: React.FC<CardProps> = ({
         <Card.Content className="backCard" style={{
           position: "relative",
           top: "-30px",
-          left: "-10px"
+          left: "-35px"
         }}>
           <div>
             <Text
