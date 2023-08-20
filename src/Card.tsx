@@ -17,7 +17,7 @@ function hexToRgb(hex: string) {
 
 // computes the difference between 'color' and white
 function colorDiff(color: string): number {
-  let colorObj = hexToRgb(color);
+  let colorObj = hexToRgb(color) ?? { r: 0, g: 0, b: 0};
   let white = { r: 255, g: 255, b: 255 };
   const sub = (a: any, b: any) => { return { r: b.r - a.r, g: b.g - a.g, b: b.b - a.b } }
   const mag = (o: any) => Math.sqrt(o.r*o.r + o.g*o.g + o.b*o.b);
@@ -84,7 +84,7 @@ const SBCard: React.FC<CardProps> = ({
 
         <div style={{
           position: "relative",
-          top: "-25px"
+          top: "-20px"
         }}>
         {logo === SBLogo ? (
           <div
@@ -97,6 +97,8 @@ const SBCard: React.FC<CardProps> = ({
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
+                position: "relative",
+                top: "20px"
             }}
           >
             <img
@@ -110,7 +112,7 @@ const SBCard: React.FC<CardProps> = ({
 
         <Card.Content style={{
           position: "relative",
-          top: "-20px"
+          top: logo === SBLogo ? "-20px" : "20px"
         }}>
           <MiniLogo fillColor={textColor} visible={true} />
         </Card.Content>

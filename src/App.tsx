@@ -20,7 +20,7 @@ import type { Variant, Alignment } from "./types";
 const green = "#5afc03";
 
 function App() {
-  const [variant, setVariant] = useState<Variant>("white");
+  const [variant, setVariant] = useState<Variant>("#ffffff");
   const [align, setAlign] = useState<Alignment>("center");
   const [frontSize, setFrontSize] = useState<number>(14);
   const [backSize, setBackSize] = useState<number>(8);
@@ -38,7 +38,7 @@ function App() {
 
   const [svgLogo, setSvgLogo] = useState<string>("");
   useEffect(() => {
-    setSvgLogo(replaceFill(variant === "white" ? "black" : "white"));
+    setSvgLogo(replaceFill(variant === "#ffffff" ? "black" : "white"));
   }, [variant]);
 
   const cardChangeHandler = (value: Variant) => setVariant(value);
