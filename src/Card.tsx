@@ -6,6 +6,26 @@ import SBC from "./SBC";
 import ClassicLogo from "./CLogo";
 import MiniLogo from "./MiniLogo";
 
+function hexToRgb(hex: string) {
+  var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  return result ? {
+    r: parseInt(result[1], 16),
+    g: parseInt(result[2], 16),
+    b: parseInt(result[3], 16)
+  } : null;
+}
+
+// computes the difference between 'color' and white
+function colorDiff(color: string): number {
+  let colorObj = hexToRgb(color);
+  let white = { r: 255, g: 255, b: 255 };
+  const sub = (a: any, b: any) => { return { r: b.r - a.r, g: b.g - a.g, b: b.b - a.b } }
+  const mag = (o: any) => Math.sqrt(o.r*o.r + o.g*o.g + o.b*o.b);
+  console.log(mag(sub(colorObj, white)));
+
+  return mag(sub(colorObj, white));
+}
+
 type CardProps = {
   variant: Variant;
   Network: any;
@@ -120,7 +140,8 @@ const SBCard: React.FC<CardProps> = ({
         </Card.Content>
         <Card.Content className="backCard" style={{
           position: "relative",
-          top: "-30px"
+          top: "-30px",
+          left: "-10px"
         }}>
           <div>
             <Text
@@ -159,7 +180,7 @@ const SBCard: React.FC<CardProps> = ({
                 : ""}
             </Text>{" "}
           </div>
-          <QRCode color={variant == "white" ? "black" : variant} />
+          <QRCode color={colorDiff(variant) < 110 ? "#000000" : variant} />
         </Card.Content>
 
         <Card.Content style={{
@@ -251,7 +272,7 @@ export const Classic: React.FC<
 
         <Card.Content className="backCard">
           {color == "white" ? <SBC /> : <SBC />}
-          <QRCode color={textColor} />
+          <QRCode color={colorDiff(variant) < 100 ? "black" : variant} />
         </Card.Content>
 
         <Card.Content>

@@ -44,12 +44,14 @@ function App() {
   const cardChangeHandler = (value: Variant) => setVariant(value);
   const alighChangeHandler = (value: Alignment) => setAlign(value);
 
+  /*
   console.log(`
     Made by Josias Aurel
     Contact ->
     Twitter: @JosiasWing
     Email: hey@josiasw.dev
   `);
+  */
 
   return (
     <div className="app">
