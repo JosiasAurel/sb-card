@@ -60,12 +60,10 @@ body {
 
 .nav-pro {
   background: rgb(2, 0, 36);
-  background: linear-gradient(
-    135deg,
-    rgba(2, 0, 36, 1) 1%,
-    rgba(155, 123, 238, 1) 22%,
-    rgba(0, 212, 255, 1) 72%
-  );
+  background: linear-gradient(135deg,
+      rgba(2, 0, 36, 1) 1%,
+      rgba(155, 123, 238, 1) 22%,
+      rgba(0, 212, 255, 1) 72%);
 }
 
 .app {
@@ -172,6 +170,7 @@ body {
   position: relative;
   top: -60px;
 }
+
 .recto .minilogo {
   position: relative;
   top: -30px;
@@ -298,4 +297,48 @@ body {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+}
+
+.cls-2-p {
+  clip-path: url(#clip-path);
+}
+
+.cls-3-p {
+  clip-path: url(#clip-path-2);
+}
+
+.cls-4-p {
+  clip-path: url(#clip-path-3);
+}
+
+.cls-5-p {
+  clip-path: url(#clip-path-4);
+}
+
+.cls-6-p {
+  clip-path: url(#clip-path-5);
+}
+
+.cls-7-p {
+  clip-path: url(#clip-path-6);
+}
+
+.cls-8-p {
+  clip-path: url(#clip-path-7);
+}
+
+.cls-9-p {
+  clip-path: url(#clip-path-8);
+}
+
+.cls-10-p {
+  clip-path: url(#clip-path-9);
+}
+
+.cls-11-p {
+  clip-path: url(#clip-path-10);
+}
+
+.cls-12-p {
+  clip-path: url(#clip-path-11);
 }

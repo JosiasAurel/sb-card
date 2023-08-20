@@ -1,0 +1,49 @@
+.cls-2-p {
+    clip-path: url(#clip-path);
+}
+
+.cls-3-p {
+    clip-path: url(#clip-path-2);
+}
+
+.cls-4-p {
+    clip-path: url(#clip-path-3);
+}
+
+.cls-5-p {
+    clip-path: url(#clip-path-4);
+}
+
+.cls-6-p {
+    clip-path: url(#clip-path-5);
+}
+
+.cls-7-p {
+    clip-path: url(#clip-path-6);
+}
+
+.cls-8-p {
+    clip-path: url(#clip-path-7);
+}
+
+.cls-9-p {
+    clip-path: url(#clip-path-8);
+}
+
+.cls-10-p {
+    clip-path: url(#clip-path-9);
+}
+
+.cls-11-p {
+    clip-path: url(#clip-path-10);
+}
+
+.cls-12-p {
+    clip-path: url(#clip-path-11);
+}
+
+#mlogo {
+    width: 800px;
+    height: 800px;
+    transform: scale(2.5);
+}

@@ -5,6 +5,7 @@ import Wifi from "./Wifi";
 import SBC from "./SBC";
 import ClassicLogo from "./CLogo";
 import MiniLogo from "./MiniLogo";
+import MainLogo from "./MainLogo";
 
 function hexToRgb(hex: string) {
   var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
@@ -89,8 +90,9 @@ const SBCard: React.FC<CardProps> = ({
         {logo === SBLogo ? (
           <div
             style={{ textAlign: "center" }}
-            dangerouslySetInnerHTML={{ __html: svgLogo }}
-          ></div>
+          >
+              <MainLogo fillColor={textColor} />
+              </div>
         ) : (
           <div
             style={{
