@@ -140,9 +140,25 @@ body {
   display: none;
 }
 
-@media screen and (max-width: 1000px) {
+@media (max-width: 1000px) {
   .app {
     flex-direction: column;
+    margin: 0 10px;
+  }
+
+  .editor {
+    width: 100%;
+    overflow-y: visible;
+  }
+
+  .preview {
+    width: 100% !important;
+  }
+}
+
+@media (max-width: 400px) {
+  .preview {
+    transform: scale(0.8);
   }
 }
 
