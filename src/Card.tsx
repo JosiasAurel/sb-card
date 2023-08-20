@@ -57,12 +57,15 @@ const SBCard: React.FC<CardProps> = ({
           style={{
             display: "flex",
             justifyContent: "flex-end",
-            position: "relative",
           }}
         >
-          <Wifi />
+          <Wifi fillColor={textColor} />
         </Card.Content>
 
+        <div style={{
+          position: "relative",
+          top: "-25px"
+        }}>
         {logo === SBLogo ? (
           <div
             style={{ textAlign: "center" }}
@@ -83,9 +86,13 @@ const SBCard: React.FC<CardProps> = ({
             />
           </div>
         )}
+  </div>
 
-        <Card.Content>
-          <MiniLogo visible={true} />
+        <Card.Content style={{
+          position: "relative",
+          top: "-20px"
+        }}>
+          <MiniLogo fillColor={textColor} visible={true} />
         </Card.Content>
       </Card>
       <Spacer />
@@ -109,9 +116,12 @@ const SBCard: React.FC<CardProps> = ({
             justifyContent: "flex-end",
           }}
         >
-          <Wifi />
+          <Wifi fillColor={textColor} />
         </Card.Content>
-        <Card.Content className="backCard">
+        <Card.Content className="backCard" style={{
+          position: "relative",
+          top: "-30px"
+        }}>
           <div>
             <Text
               style={{
@@ -149,11 +159,14 @@ const SBCard: React.FC<CardProps> = ({
                 : ""}
             </Text>{" "}
           </div>
-          <QRCode color={textColor} />
+          <QRCode color={variant == "white" ? "black" : variant} />
         </Card.Content>
 
-        <Card.Content>
-          <MiniLogo visible={true} />
+        <Card.Content style={{
+          position: "relative",
+          top: "-50px"
+        }}>
+          <MiniLogo fillColor={textColor} visible={true} />
         </Card.Content>
       </Card>
     </>
@@ -200,13 +213,13 @@ export const Classic: React.FC<
             justifyContent: "flex-end",
           }}
         >
-          <Wifi />
+          <Wifi fillColor={textColor} />
         </Card.Content>
 
         <ClassicLogo />
 
         <Card.Content>
-          <MiniLogo visible={false} />
+          <MiniLogo fillColor={textColor} visible={false} />
         </Card.Content>
       </Card>
       <Spacer />
@@ -233,7 +246,7 @@ export const Classic: React.FC<
             justifyContent: "flex-end",
           }}
         >
-          <Wifi />
+          <Wifi fillColor={textColor} />
         </Card.Content>
 
         <Card.Content className="backCard">
@@ -242,7 +255,7 @@ export const Classic: React.FC<
         </Card.Content>
 
         <Card.Content>
-          <MiniLogo visible={true} />
+          <MiniLogo fillColor={textColor} visible={true} />
         </Card.Content>
       </Card>
     </>

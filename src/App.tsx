@@ -149,9 +149,9 @@ function App() {
           onChange={(e) => alighChangeHandler(e as Alignment)}
           useRow
         >
-          <Radio value="start">Gauche</Radio>
-          <Radio value="center">Centre</Radio>
-          <Radio value="end">Droite</Radio>
+          <Radio value="start" checked={align == "start"}>Gauche</Radio>
+          <Radio value="center" checked={align == "center"}>Centre</Radio>
+          <Radio value="end" checked={align == "end"}>Droite</Radio>
         </Radio.Group>
         <Spacer />
 
